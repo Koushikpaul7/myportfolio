@@ -22,8 +22,10 @@ Route::post('/panel/logout', [PanelAuthController::class, 'logout'])->name('pane
 // Dashboard (protected)
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// Protected routes (middleware: panelauth)
+// ✅ Everything backend is now protected by 'panelauth'
 Route::middleware(['panelauth'])->group(function () {
+    // Dashboard
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Banners
     Route::prefix('backend/banner')->name('backend.banner.')->group(function () {
@@ -55,11 +57,18 @@ Route::middleware(['panelauth'])->group(function () {
         Route::delete('/delete/{portfolio}', [PortfolioController::class, 'destroy'])->name('destroy');
     });
 
-    // About section
+    // Abouts
     Route::prefix('admin')->name('backend.')->group(function () {
         Route::resource('abouts', AboutController::class);
     });
 
-    // Admin dashboard view
+    // Admin users (super-only)
+    Route::prefix('backend/admin')->name('backend.admin.')->group(function () {
+        Route::get('/', [DashboardController::class, 'indexAdmins'])->name('index');
+        Route::get('/create', [DashboardController::class, 'create'])->name('create');
+        Route::post('/store', [DashboardController::class, 'store'])->name('store');
+    });
+
+    // Optional view route
     Route::view('/backend/admin/dashboard', 'backend.admin.dashboard')->name('backend.admin.dashboard');
 });
