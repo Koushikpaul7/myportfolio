@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
-    // Show admin dashboard
+    // Dashboard view
     public function index()
     {
         return view('panelauth.dashboard');
@@ -18,7 +18,7 @@ class DashboardController extends Controller
     public function indexAdmins()
     {
         $user = session('panel_user');
-        if (!$user->is_super) { // use 'is_super' here
+        if (!$user->is_super) {
             abort(403, 'Unauthorized');
         }
 
@@ -26,21 +26,22 @@ class DashboardController extends Controller
         return view('panelauth.index', compact('admins'));
     }
 
-    // Show form to create new admin
+    // Show create admin form
     public function create()
     {
         $user = session('panel_user');
-        if (!$user->is_super) { // use 'is_super' here
+        if (!$user->is_super) {
             abort(403, 'Unauthorized');
         }
+
         return view('panelauth.create');
     }
 
-    // Store new admin in DB
+    // Store new admin
     public function store(Request $request)
     {
         $user = session('panel_user');
-        if (!$user->is_super) { // use 'is_super' here
+        if (!$user->is_super) {
             abort(403, 'Unauthorized');
         }
 
@@ -56,9 +57,9 @@ class DashboardController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'visible_password' => $request->password,
-            'is_super' => $request->has('is_super'), // this matches DB
+            'is_super' => $request->has('is_super'),
         ]);
 
-        return redirect()->route('backend.admin.index')->with('success', 'New admin created');
+        return redirect()->route('backend.admin.index')->with('success', 'New admin created.');
     }
 }

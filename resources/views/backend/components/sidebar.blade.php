@@ -113,24 +113,22 @@
     </li>
 
 
-{{-- add user --}}
-@if(isset($panelUser) && $panelUser->is_super)
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
-           aria-expanded="true" aria-controls="collapseUsers">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Users</span>
-        </a>
-        <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Manage Users:</h6>
-                <a class="collapse-item" href="{{ route('backend.admin.index') }}">All Users</a>
-                <a class="collapse-item" href="{{ route('backend.admin.create') }}">Add New User</a>
-            </div>
+{{-- sidebar.blade.php --}}
+@if($panelUser && $panelUser->is_super)
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
+        <i class="fas fa-fw fa-user"></i>
+        <span>Users</span>
+    </a>
+    <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Manage Users:</h6>
+            <a class="collapse-item" href="{{ route('backend.admin.index') }}">All Users</a>
+            <a class="collapse-item" href="{{ route('backend.admin.create') }}">Add New User</a>
         </div>
-    </li>
+    </div>
+</li>
 @endif
-
 
 
 </ul>

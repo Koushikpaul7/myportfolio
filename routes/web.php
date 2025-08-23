@@ -63,6 +63,7 @@ Route::middleware(['panelauth'])->group(function () {
     });
 
     // Admin users (super-only)
+    // Super admin users
     Route::prefix('backend/admin')->name('backend.admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'indexAdmins'])->name('index');
         Route::get('/create', [DashboardController::class, 'create'])->name('create');
